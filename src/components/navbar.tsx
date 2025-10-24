@@ -8,7 +8,7 @@ import ToggleTheme from "./toggle-theme";
 const Navbar = () => {
   const router = useRouter();
   return (
-    <header className="bg-amber-800">
+    <header className="bg-orange-400">
       <div className="flex items-center justify-between p-4 mx-auto cursor-pointer sm:max-w-4xl md:max-w-6xl">
         <h1 className="text-3xl" onClick={() => router.push("/")}>
           Giugno

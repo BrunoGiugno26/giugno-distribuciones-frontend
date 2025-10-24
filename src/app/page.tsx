@@ -1,11 +1,9 @@
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import CarouselTextBanner from "@/components/carousel-text-banner";
 
 export default function Home() {
   return (
   <main>
-    hello from home
-    <Button className="btn-base bg-black text-white">click</Button>
+    <CarouselTextBanner/>
   </main>
   );
 }

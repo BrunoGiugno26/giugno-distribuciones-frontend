@@ -3,7 +3,6 @@
 import * as React from "react"
 import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
-
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -13,26 +12,49 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 const ToggleTheme = () => {
-  const { setTheme } = useTheme()
+  const [mounted, setMounted] = React.useState(false); 
+  const { theme, setTheme } = useTheme(); 
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+  
+  if (!mounted) {
+    return (
+        <Button variant="outline" size="icon" disabled className="bg-amber-800 text-white border-amber-500 hover:bg-amber-800">
+            <Sun className="h-[1.2rem] w-[1.2rem] text-primary-foreground opacity-50" /> 
+            <span className="sr-only">Toggle theme</span>
+        </Button>
+    ); 
+  }
+
+  const isLight = theme === 'light' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: light)').matches);
+
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon">
-          <Sun className="h-[1.2rem] w-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90" />
-          <Moon className="absolute h-[1.2rem] w-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0" />
-          <span className="sr-only">Toggle theme</span>
+        <Button variant="outline" size="icon" className="bg-amber-500 text-white border-amber-500 hover:bg-amber-300">
+        
+          {isLight ? (
+             <Sun className="h-[1.2rem] w-[1.2rem] transition-all" />
+          ) : (
+             <Moon className="h-[1.2rem] w-[1.2rem] transition-all" />
+          )}
+
+          <span className="sr-only">Cambiar tema</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-white" align="end">
-        <DropdownMenuItem className="text-black hover:bg-amber-800" onClick={() => setTheme("light")}>
-          Light
+      <DropdownMenuContent className="bg-white text-black border-border shadow-lg" align="end"> 
+        <DropdownMenuItem onClick={() => setTheme("light")} className="hover:bg-amber-500 hover:text-white transition-colors cursor-pointer">
+          Día 
         </DropdownMenuItem>
-        <DropdownMenuItem className="text-black hover:bg-amber-800" onClick={() => setTheme("dark")}>
-          Dark
+        <DropdownMenuItem onClick={() => setTheme("dark")} className="hover:bg-amber-500 hover:text-white transition-colors cursor-pointer">
+          Noche
         </DropdownMenuItem>
+
       </DropdownMenuContent>
     </DropdownMenu>
-  )
+  );
 }
-export default ToggleTheme
+export default ToggleTheme;
