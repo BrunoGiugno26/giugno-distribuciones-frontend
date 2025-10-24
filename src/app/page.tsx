@@ -5,7 +5,7 @@ export default function Home() {
   return (
   <main>
     hello from home
-    <Button className="btn-base bg-black text-white">clickea aca</Button>
+    <Button className="btn-base bg-black text-white">click</Button>
   </main>
   );
 }
