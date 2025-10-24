@@ -34,12 +34,19 @@ const ToggleTheme = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="icon" className="bg-amber-500 text-white border-amber-500 hover:bg-amber-300">
-        
+        <Button
+          variant="outline"
+          size="icon"
+          className={
+            isLight
+              ? "bg-amber-500 text-white border-amber-500 hover:bg-amber-300"
+              : "bg-indigo-900 text-white border-indigo-100 hover:bg-indigo-600"
+          }
+        >
           {isLight ? (
-             <Sun className="h-[1.2rem] w-[1.2rem] transition-all" />
+            <Sun className="h-[1.2rem] w-[1.2rem] transition-all" />
           ) : (
-             <Moon className="h-[1.2rem] w-[1.2rem] transition-all" />
+            <Moon className="h-[1.2rem] w-[1.2rem] transition-all" />
           )}
 
           <span className="sr-only">Cambiar tema</span>

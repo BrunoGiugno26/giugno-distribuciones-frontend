@@ -11,9 +11,6 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 
-// -------------------------------------------------------------
-// 1. DATOS DE CATEGORÍAS PRINCIPALES (Los segmentos de Strapi)
-// -------------------------------------------------------------
 export const categoriasPrincipales: {
   title: string;
   href: string;
@@ -33,9 +30,6 @@ export const categoriasPrincipales: {
   },
 ];
 
-// -------------------------------------------------------------
-// 2. DATOS DE TIPOS DE PRODUCTO (La enumeración 'tipoProducto' de Strapi)
-// -------------------------------------------------------------
 export const tiposDeProducto: { title: string; href: string }[] = [
   // NOTA: El href usa el valor exacto de la Enumeración (el slug)
   { title: "Shampoos", href: "/productos/shampoo" },
