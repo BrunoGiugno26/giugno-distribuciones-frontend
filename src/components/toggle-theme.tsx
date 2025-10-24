@@ -19,6 +19,9 @@ const ToggleTheme = () => {
     setMounted(true);
   }, []);
   
+  // Usamos el tema actual (o el del sistema) para determinar el estado de "Light"
+  const isLight = theme === 'light' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: light)').matches);
+
   if (!mounted) {
     return (
         <Button variant="outline" size="icon" disabled className="bg-amber-800 text-white border-amber-500 hover:bg-amber-800">
@@ -27,8 +30,6 @@ const ToggleTheme = () => {
         </Button>
     ); 
   }
-
-  const isLight = theme === 'light' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: light)').matches);
 
 
   return (
@@ -39,8 +40,8 @@ const ToggleTheme = () => {
           size="icon"
           className={
             isLight
-              ? "bg-amber-500 text-white border-amber-500 hover:bg-amber-300"
-              : "bg-indigo-900 text-white border-indigo-100 hover:bg-indigo-600"
+              ? "bg-amber-500 text-white border-amber-500 hover:bg-amber-300 hover:text-gray-800"
+              : "bg-gray-800 text-white border-gray-600 hover:bg-gray-600" // Ajustado para Dark Mode
           }
         >
           {isLight ? (
@@ -52,11 +53,22 @@ const ToggleTheme = () => {
           <span className="sr-only">Cambiar tema</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="bg-white text-black border-border shadow-lg" align="end"> 
-        <DropdownMenuItem onClick={() => setTheme("light")} className="hover:bg-amber-500 hover:text-white transition-colors cursor-pointer">
+      {/* Clases condicionales para el contenido del Dropdown */}
+      <DropdownMenuContent 
+        className={isLight ? "bg-white text-black border-border shadow-lg" : "bg-gray-800 text-white border-gray-700 shadow-lg"} 
+        align="end"
+      > 
+        {/* Clases condicionales para el hover de los ítems */}
+        <DropdownMenuItem 
+          onClick={() => setTheme("light")} 
+          className={isLight ? "hover:bg-orange-100 transition-colors cursor-pointer" : "hover:bg-amber-600 hover:text-black transition-colors cursor-pointer"}
+        >
           Día 
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")} className="hover:bg-amber-500 hover:text-white transition-colors cursor-pointer">
+        <DropdownMenuItem 
+          onClick={() => setTheme("dark")} 
+          className={isLight ? "hover:bg-orange-100 transition-colors cursor-pointer" : "hover:bg-amber-600 hover:text-black transition-colors cursor-pointer"}
+        >
           Noche
         </DropdownMenuItem>
 

@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
+import { useTheme } from "next-themes";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -45,6 +46,24 @@ export const tiposDeProducto: { title: string; href: string }[] = [
 
 
 const MenuList: React.FC = () => {
+  const { theme } = useTheme(); 
+
+  // Clases condicionales para el contenido desplegable
+  const contentBaseClasses = "border-border shadow-lg";
+  const contentThemeClasses = theme === 'dark' 
+    ? "bg-gray-900 text-white" 
+    : "bg-white text-black";
+
+  // Clases condicionales para los ítems individuales (ListItem)
+  const itemThemeClasses = theme === 'dark' 
+    ? "border-l-amber-500 bg-gray-800 shadow-xl transition-shadow duration-200 hover:shadow-2xl focus-within:shadow-2xl focus-within:ring-amber-500" 
+    : "border-l-amber-400 bg-amber-50 shadow-sm transition-shadow duration-200 hover:shadow-md focus-within:shadow-md focus-within:ring-amber-300";
+
+  // Clases condicionales para el link principal (Ventas Mayoristas)
+  const linkMayoristaClasses = theme === 'dark'
+    ? "bg-amber-600 hover:bg-amber-700 text-gray-900 shadow-2xl ring-amber-500"
+    : "bg-amber-500 text-white shadow-lg hover:scale-[1.02] ring-amber-300";
+
   return (
     <NavigationMenu>
       <NavigationMenuList>
@@ -52,15 +71,14 @@ const MenuList: React.FC = () => {
         {/* DESPLEGABLE 1: CUIDADO CAPILAR */}
         <NavigationMenuItem>
           <NavigationMenuTrigger>Cuidado Capilar</NavigationMenuTrigger>
-          <NavigationMenuContent className="border-amber-700 bg-white text-black">
-            <ul className="grid w-[240px] gap-3 p-3"> {/* Aumentado gap para el estilo ámbar */}
+          <NavigationMenuContent className={`${contentBaseClasses} ${contentThemeClasses}`}>
+            <ul className="grid w-60 gap-3 p-3">
               {tiposDeProducto.map((item) => (
                 <ListItem
-                  key={item.title} // Usamos title como key (es único)
+                  key={item.title}
                   title={item.title}
                   href={item.href}
-                  // Estilo ÁMBAR aplicado directamente
-                  className="border border-amber-200 border-l-4 border-l-amber-400 rounded-md p-2 bg-amber-50 shadow-sm transition-shadow duration-200 hover:shadow-md focus-within:shadow-md focus-within:ring-2 focus-within:ring-amber-300"
+                  className={`border border-amber-200 border-l-4 rounded-md p-2 focus-within:ring-2 ${itemThemeClasses}`}
                 />
               ))}
             </ul>
@@ -70,27 +88,24 @@ const MenuList: React.FC = () => {
         {/* DESPLEGABLE 2: PARA SALONES */}
         <NavigationMenuItem>
           <NavigationMenuTrigger>Para Salones</NavigationMenuTrigger>
-            <NavigationMenuContent className="text-black bg-white">
+            <NavigationMenuContent className={`${contentBaseClasses} ${contentThemeClasses}`}>
             <ul className="grid w-full max-w-[400px] gap-3 p-3 mx-auto md:w-[500px] md:grid-cols-2">
               {categoriasPrincipales.map((item) => (
               <ListItem
-                key={item.title} // Usamos title como key
+                key={item.title}
                 title={item.title}
                 href={item.href}
-                // Estilo ÁMBAR aplicado directamente
-                className="border border-amber-200 border-l-4 border-l-amber-400 rounded-md p-2 bg-amber-50 shadow-sm transition-shadow duration-200 hover:shadow-md focus-within:shadow-md focus-within:ring-2 focus-within:ring-amber-300"
+                className={`border border-amber-200 border-l-4 rounded-md p-2 focus-within:ring-2 ${itemThemeClasses}`}
               >
                 {item.description}
               </ListItem>
               ))}
 
-              {/* Call-to-action de Ventas Mayoristas (más destacado y ocupa toda la fila en md) */}
               <li className="row-span-1 md:col-span-2">
               <NavigationMenuLink asChild>
                 <Link
                 href="/contacto"
-                // CTA más destacado: color más fuerte, texto claro, mayor sombra y efecto hover
-                className="flex h-full w-full flex-col justify-center rounded-md p-4 no-underline outline-none transition-transform duration-150 transform bg-amber-500 text-white shadow-lg hover:scale-[1.02] focus:shadow-2xl ring-2 ring-amber-300"
+                className={`flex h-full w-full flex-col justify-center rounded-md p-4 no-underline outline-none transition-transform duration-150 transform hover:scale-[1.02] focus:shadow-2xl ring-2 ${linkMayoristaClasses}`}
                 >
                 <div className="text-lg font-bold text-center">Ventas Mayoristas</div>
                 <p className="text-sm leading-tight text-center">
@@ -106,13 +121,12 @@ const MenuList: React.FC = () => {
         {/* DESPLEGABLE 3: NOSOTROS */}
         <NavigationMenuItem>
           <NavigationMenuTrigger>Nosotros</NavigationMenuTrigger>
-          <NavigationMenuContent className=" bg-white text-black">
+          <NavigationMenuContent className={`${contentBaseClasses} ${contentThemeClasses}`}>
             <ul className="grid w-[300px] gap-3 p-3">
               <li key="nosotros-quienes-somos" className="row-span-1">
                 <NavigationMenuLink asChild>
                   <Link
                     href="/nosotros"
-                    // Estilo ÁMBAR similar al del CTA
                     className="flex h-full w-full flex-col justify-end rounded-md p-4 no-underline outline-none transition-all duration-200 focus:shadow-md bg-amber-400 hover:bg-amber-300"
                   >
                     <div className="text-lg text-center font-medium text-amber-900">Giugno Distribuciones</div>
@@ -126,7 +140,7 @@ const MenuList: React.FC = () => {
                 key="nosotros-tienda" 
                 title="Tienda" 
                 href="/shop"
-                className="border border-amber-200 border-l-4 border-l-amber-400 rounded-md p-2 bg-amber-50 shadow-sm transition-shadow duration-200 hover:shadow-md focus-within:shadow-md focus-within:ring-2 focus-within:ring-amber-300"
+                className={`border border-amber-200 border-l-4 rounded-md p-2 focus-within:ring-2 ${itemThemeClasses}`}
               >
                 Accede a toda tu información, tus pedidos y mucho más.
               </ListItem>
@@ -134,7 +148,7 @@ const MenuList: React.FC = () => {
                 key="nosotros-ofertas" 
                 title="Ofertas" 
                 href="/offers" 
-                className="border border-amber-200 border-l-4 border-l-amber-400 rounded-md p-2 bg-amber-50 shadow-sm transition-shadow duration-200 hover:shadow-md focus-within:shadow-md focus-within:ring-2 focus-within:ring-amber-300"
+                className={`border border-amber-200 border-l-4 rounded-md p-2 focus-within:ring-2 ${itemThemeClasses}`}
               >
                 Promociones y descuentos especiales
               </ListItem>
@@ -148,29 +162,22 @@ const MenuList: React.FC = () => {
 };
 export default MenuList;
 
-
-// -------------------------------------------------------------
-// COMPONENTE AUXILIAR: ListItem (Requerido para la navegación)
-// -------------------------------------------------------------
+// El componente ListItem está tipado correctamente.
 function ListItem({
   title,
   children,
   href,
   ...props
 }: React.ComponentPropsWithoutRef<"li"> & { href: string }) {
-  // NOTA: Las clases originales de shadcn han sido MOVVIDAS a la prop className,
-  // para que el estilo AMBAR que pasas desde MenuList se aplique.
+  
   return (
     <li {...props}>
       <NavigationMenuLink asChild>
         <Link 
           href={href} 
-          // 🛑 Aquí se aplican las clases de estilo AMBAR pasadas desde el padre
           className="block select-none space-y-1 leading-none no-underline outline-none transition-colors"
         >
-          {/* El div interno necesita las clases de texto */}
           <div className="text-sm leading-none font-medium text-foreground">{title}</div>
-          {/* La descripción usa texto secundario */}
           {children && (
             <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
               {children}
@@ -181,5 +188,6 @@ function ListItem({
     </li>
   );
 }
+
 
 
